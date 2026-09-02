@@ -1,1 +1,60 @@
 <!-- Addition game mode placeholder -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- UBAH 1: Judul halaman -->
+    <title>Mode 2: Addition - Math Game</title>
+    <link rel="stylesheet" href="../../css/main.css">
+    <!-- UBAH 2: Memanggil file CSS Mode 2 -->
+    <link rel="stylesheet" href="../../css/mode-css/2-addition.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Header dengan Score dan Timer -->
+        <div class="game-header">
+            <div class="score-display">
+                <span class="label">Score:</span>
+                <span id="score" class="value">0</span>
+            </div>
+            <div class="timer-display">
+                <span class="label">Time:</span>
+                <span id="timer" class="value">10</span>
+            </div>
+        </div>
+
+        <!-- Area Game -->
+        <div id="gameArea" class="game-area">
+            <div class="question-box">
+                <h2 id="question">Loading...</h2>
+            </div>
+
+            <div class="answers-grid">
+                <button class="answer-btn" data-answer="0"></button>
+                <button class="answer-btn" data-answer="1"></button>
+                <button class="answer-btn" data-answer="2"></button>
+                <button class="answer-btn" data-answer="3"></button>
+            </div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="gameOver" class="game-over hidden">
+            <h2>Game Over!</h2>
+            <div class="final-score">
+                <p>Final Score:</p>
+                <span id="finalScore">0</span>
+            </div>
+            <div class="game-over-buttons">
+                <button id="restartBtn" class="btn-primary">Play Again</button>
+                <!-- UBAH 3: Pastikan link kembali mengarah ke menu.html yang benar -->
+                <a href="../menu.html" class="btn-secondary">Back to Menu</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <!-- UBAH 4: Memanggil file JS Mode 2 -->
+    <script src="../../js/logic/2-addition.js"></script>
+</body>
+</html>

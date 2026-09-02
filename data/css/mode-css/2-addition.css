@@ -1,1 +1,242 @@
 /* Mode 2: Addition mode-specific styles */
+/* Mode 1: Multiplication - Styling khusus */
+
+.game-container {
+    width: 90%;
+    max-width: 600px;
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+/* Header dengan Score dan Timer */
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 15px;
+    color: white;
+}
+
+.score-display,
+.timer-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.game-header .label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin-bottom: 0.3rem;
+}
+
+.game-header .value {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+/* Area Game */
+.game-area {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.question-box {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.question-box h2 {
+    color: white;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Grid Jawaban */
+.answers-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.answer-btn {
+    padding: 2rem 1rem;
+    font-size: 1.8rem;
+    font-weight: bold;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.answer-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+}
+
+.answer-btn:active {
+    transform: translateY(0);
+}
+
+.answer-btn.correct {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    animation: pulse 0.5s;
+}
+
+.answer-btn.wrong {
+    background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+    animation: shake 0.5s;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+/* Game Over Screen */
+.game-over {
+    text-align: center;
+}
+
+.game-over.hidden {
+    display: none;
+}
+
+.game-over h2 {
+    font-size: 2.5rem;
+    color: #667eea;
+    margin-bottom: 2rem;
+}
+
+.final-score {
+    margin-bottom: 2rem;
+}
+
+.final-score p {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.final-score span {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #f5576c;
+}
+
+.game-over-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.3s;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn-secondary {
+    background: white;
+    color: #667eea;
+    border: 2px solid #667eea;
+}
+
+.btn-primary:hover,
+.btn-secondary:hover {
+    transform: scale(1.05);
+}
+
+/* Responsive - Mobile First */
+@media (max-width: 768px) {
+    .game-container {
+        padding: 1.5rem;
+    }
+
+    .game-header {
+        flex-direction: row;
+        padding: 1rem;
+    }
+
+    .game-header .value {
+        font-size: 1.5rem;
+    }
+
+    .question-box h2 {
+        font-size: 2rem;
+    }
+
+    .answer-btn {
+        padding: 1.5rem 1rem;
+        font-size: 1.5rem;
+    }
+
+    .final-score span {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-header .value {
+        font-size: 1.3rem;
+    }
+
+    .game-header .label {
+        font-size: 0.8rem;
+    }
+
+    .question-box {
+        padding: 1.5rem;
+    }
+
+    .question-box h2 {
+        font-size: 1.5rem;
+    }
+
+    .answer-btn {
+        padding: 1rem;
+        font-size: 1.2rem;
+    }
+
+    .answers-grid {
+        gap: 0.8rem;
+    }
+}
+
+/* Animasi Timer Warning */
+.timer-warning {
+    animation: timerBlink 0.5s infinite;
+}
+
+@keyframes timerBlink {
+    0%, 100% { color: white; }
+    50% { color: #ff0000; }
+}
