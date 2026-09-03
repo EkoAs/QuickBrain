@@ -1,1 +1,44 @@
 /* Mode 7: Memory mode-specific styles */
+/* Specific CSS for Mode 7: Memory Grid */
+
+.memory-grid {
+    display: grid;
+    gap: 8px;
+    width: 100%;
+    max-width: 350px;
+    margin: 20px auto;
+    aspect-ratio: 1 / 1; /* Keeps the grid perfectly square */
+}
+
+.memory-tile {
+    background-color: #e0e0e0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.1s, background-color 0.3s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.memory-tile:active {
+    transform: scale(0.95);
+}
+
+/* Highlight state (the pattern to remember) */
+.memory-tile.highlight {
+    background-color: #ff9800; /* Orange color to remember */
+}
+
+/* Correct click by user */
+.memory-tile.correct {
+    background-color: #4CAF50; /* Green */
+}
+
+/* Wrong click by user */
+.memory-tile.wrong {
+    background-color: #f44336; /* Red */
+}
+
+/* Disable clicking when showing pattern */
+.memory-tile.disabled {
+    pointer-events: none;
+    cursor: default;
+}

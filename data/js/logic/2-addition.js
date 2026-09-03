@@ -1,5 +1,4 @@
-// Addition game mode logic placeholder
-// Mode 2: Addition (Penjumlahan) Game Logic
+// Mode 2: Addition Game Logic
 
 // Game state
 let score = 0;
@@ -17,6 +16,8 @@ const gameArea = document.getElementById('gameArea');
 const gameOverScreen = document.getElementById('gameOver');
 const finalScoreElement = document.getElementById('finalScore');
 const restartBtn = document.getElementById('restartBtn');
+// NEW: DOM Element for the correct answer message
+const correctAnswerMessage = document.getElementById('correctAnswerMessage');
 
 // Generate random number between min and max
 function randomInt(min, max) {
@@ -25,36 +26,36 @@ function randomInt(min, max) {
 
 // Generate ADDITION question
 function generateQuestion() {
-    // Rentang angka diubah jadi 1-30 agar pas untuk hitung cepat
+    // Range changed to 1-30 for quick math
     const num1 = randomInt(1, 30);
     const num2 = randomInt(1, 30);
     const correctAnswer = num1 + num2;
     
-    // Generate 3 wrong answers (jebakan khas penjumlahan)
+    // Generate 3 wrong answers (common addition traps)
     const wrongAnswers = [];
     while (wrongAnswers.length < 3) {
         let wrong;
         const randomChoice = randomInt(1, 3);
         
         if (randomChoice === 1) {
-            // Strategi 1: Meleset sedikit (± 1 sampai 5)
+            // Strategy 1: Slightly off (± 1 to 5)
             wrong = correctAnswer + (randomInt(0, 1) === 0 ? randomInt(1, 5) : randomInt(-5, -1));
         } else if (randomChoice === 2) {
-            // Strategi 2: Salah hitung puluhan (sering terjadi di penjumlahan)
-            // Misal: 25 + 17 = 42, jebakannya 52 atau 32
+            // Strategy 2: Tens calculation error
+            // Example: 25 + 17 = 42, decoy is 52 or 32
             wrong = correctAnswer + (randomInt(0, 1) === 0 ? 10 : -10);
         } else {
-            // Strategi 3: Random di sekitar jawaban benar
+            // Strategy 3: Random around the correct answer
             wrong = randomInt(correctAnswer - 12, correctAnswer + 12);
         }
         
-        // Pastikan tidak duplikat, tidak sama dengan jawaban benar, dan nilainya > 0
+        // Ensure no duplicates, not equal to correct answer, and value > 0
         if (wrong !== correctAnswer && wrong > 0 && !wrongAnswers.includes(wrong)) {
             wrongAnswers.push(wrong);
         }
     }
     
-    // Gabungkan semua jawaban dan shuffle
+    // Combine all answers and shuffle
     const allAnswers = [correctAnswer, ...wrongAnswers];
     shuffleArray(allAnswers);
     
@@ -93,14 +94,14 @@ function startTimer() {
         timer--;
         timerElement.textContent = timer;
         
-        // Warning effect saat waktu tinggal 3 detik
+        // Warning effect when time is 3 seconds or less
         if (timer <= 3) {
             timerElement.classList.add('timer-warning');
         } else {
             timerElement.classList.remove('timer-warning');
         }
         
-        // Game over jika waktu habis
+        // Game over if time runs out
         if (timer <= 0) {
             stopTimer();
             endGame();
@@ -136,10 +137,10 @@ function checkAnswer(selectedAnswer) {
     stopTimer();
     
     if (selectedAnswer === currentQuestion.correctAnswer) {
-        // Jawaban benar
+        // Correct answer
         score++;
         scoreElement.textContent = score;
-        playSound('correct'); // Akan memanggil fungsi dari main.js (jika ada)
+        if (typeof playSound === 'function') playSound('correct');
         
         // Highlight correct answer
         answerButtons.forEach(btn => {
@@ -148,13 +149,13 @@ function checkAnswer(selectedAnswer) {
             }
         });
         
-        // Next question setelah delay
+        // Next question after delay
         setTimeout(() => {
             displayQuestion();
         }, 1000);
     } else {
-        // Jawaban salah - game over
-        playSound('wrong'); 
+        // Wrong answer - game over
+        if (typeof playSound === 'function') playSound('wrong'); 
         
         // Highlight wrong and correct answers
         answerButtons.forEach(btn => {
@@ -177,7 +178,14 @@ function checkAnswer(selectedAnswer) {
 function endGame() {
     gameActive = false;
     stopTimer();
-    playSound('gameover');
+    if (typeof playSound === 'function') playSound('gameover');
+    
+    // NEW: Display the correct answer for the last question
+    if (currentQuestion && currentQuestion.question && correctAnswerMessage) {
+        // Replace '?' with the actual correct answer
+        const solvedEquation = currentQuestion.question.replace('?', currentQuestion.correctAnswer);
+        correctAnswerMessage.textContent = `Correct Answer: ${solvedEquation}`;
+    }
     
     // Hide game area, show game over screen
     gameArea.style.display = 'none';
@@ -189,6 +197,11 @@ function endGame() {
 function restartGame() {
     score = 0;
     scoreElement.textContent = score;
+    
+    // NEW: Clear the message when restarting
+    if (correctAnswerMessage) {
+        correctAnswerMessage.textContent = "";
+    }
     
     gameOverScreen.classList.add('hidden');
     gameArea.style.display = 'flex';
@@ -218,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initGame();
 });
 
-// Mock function placeholder untuk playSound agar tidak error jika main.js belum siap
+// Mock function placeholder for playSound
 if (typeof playSound !== 'function') {
     window.playSound = function(type) {
         // console.log("Sound played: " + type);
