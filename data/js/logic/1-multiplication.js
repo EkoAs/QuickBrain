@@ -8,6 +8,7 @@ let timerInterval = null;
 let gameActive = false;
 
 // DOM Elements
+const correctAnswerMessage = document.getElementById('correctAnswerMessage');
 const scoreElement = document.getElementById('score');
 const timerElement = document.getElementById('timer');
 const questionElement = document.getElementById('question');
@@ -174,7 +175,14 @@ function checkAnswer(selectedAnswer) {
 function endGame() {
     gameActive = false;
     stopTimer();
-    playSound('gameover');
+    if (typeof playSound === 'function') playSound('gameover');
+    
+    // NEW: Display the correct answer for the last question
+    if (currentQuestion && currentQuestion.question && correctAnswerMessage) {
+        // Replace '?' with the actual correct answer
+        const solvedEquation = currentQuestion.question.replace('?', currentQuestion.correctAnswer);
+        correctAnswerMessage.textContent = `Correct Answer: ${solvedEquation}`;
+    }
     
     // Hide game area, show game over screen
     gameArea.style.display = 'none';
@@ -186,6 +194,10 @@ function endGame() {
 function restartGame() {
     score = 0;
     scoreElement.textContent = score;
+
+    if (correctAnswerMessage) {
+        correctAnswerMessage.textContent = "";
+    }
     
     gameOverScreen.classList.add('hidden');
     gameArea.style.display = 'flex';

@@ -10,6 +10,7 @@ let gameActive = false;
 let selectedButtons = []; // Array to store up to 2 clicked buttons
 
 // DOM Elements
+const correctAnswerMessage = document.getElementById('correctAnswerMessage');
 const scoreElement = document.getElementById('score');
 const timerElement = document.getElementById('timer');
 const questionElement = document.getElementById('question');
@@ -75,7 +76,8 @@ function generateQuestion() {
         question: `? ${operator} ? = ${targetResult}`,
         operator: operator,
         targetResult: targetResult,
-        answers: answers
+        answers: answers,
+        correctPair: [num1, num2] // NEW: Save the correct pair for game over screen
     };
 }
 
@@ -215,6 +217,16 @@ function endGame() {
     stopTimer();
     if (typeof playSound === 'function') playSound('gameover');
     
+    // NEW: Display the correct pair for Mode 5
+    if (currentQuestion && correctAnswerMessage) {
+        const num1 = currentQuestion.correctPair[0];
+        const num2 = currentQuestion.correctPair[1];
+        const op = currentQuestion.operator;
+        const target = currentQuestion.targetResult;
+        
+        correctAnswerMessage.textContent = `Correct Answer: ${num1} ${op} ${num2} = ${target}`;
+    }
+    
     gameArea.style.display = 'none';
     gameOverScreen.classList.remove('hidden');
     finalScoreElement.textContent = score;
@@ -223,6 +235,11 @@ function endGame() {
 function restartGame() {
     score = 0;
     scoreElement.textContent = score;
+    
+    // NEW: Clear the message when restarting
+    if (correctAnswerMessage) {
+        correctAnswerMessage.textContent = "";
+    }
     
     gameOverScreen.classList.add('hidden');
     gameArea.style.display = 'flex';
