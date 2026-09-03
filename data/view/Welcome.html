@@ -1,0 +1,312 @@
+<!-- Main menu placeholder - will display all seven selectable game mode options -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Game - How to Play</title>
+    
+    <style>
+        /* Reset & Base Settings */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0000 50%, #4d0011 100%);
+            min-height: 100vh;
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+            padding: 40px 20px;
+        }
+
+        /* Glowing Orbs */
+        body::before, body::after {
+            content: '';
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+        }
+
+        body::before {
+            width: 400px; height: 400px;
+            background: rgba(255, 0, 68, 0.12);
+            top: -100px; left: -100px;
+        }
+
+        body::after {
+            width: 350px; height: 350px;
+            background: rgba(128, 0, 32, 0.15);
+            bottom: -100px; right: -100px;
+        }
+
+        /* Floating Math Symbols */
+        .math-symbols {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            list-style: none;
+        }
+        .math-symbols li {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.2);
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+            bottom: -100px;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Main Container */
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .header-title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #ff4d6d, #ff003c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 10px rgba(255, 0, 60, 0.2);
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .header-subtitle {
+            font-size: 1.1rem;
+            color: #d1d1d1;
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        /* Grid for Mode Cards */
+        .modes-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+
+        /* Glassmorphism Card */
+        .mode-card {
+            background: rgba(15, 15, 15, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 77, 109, 0.15);
+            border-radius: 16px;
+            padding: 25px 20px;
+            width: calc(33.333% - 20px);
+            min-width: 280px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            text-align: left;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .mode-card:hover {
+            transform: translateY(-8px);
+            background: rgba(25, 10, 15, 0.7);
+            border-color: rgba(255, 77, 109, 0.4);
+            box-shadow: 0 15px 30px rgba(255, 0, 68, 0.2);
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            display: inline-block;
+            background: rgba(255, 0, 68, 0.2);
+            padding: 10px;
+            border-radius: 12px;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            color: #ff4d6d;
+            margin-bottom: 10px;
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            color: #cccccc;
+            line-height: 1.5;
+        }
+
+        /* Next Button Area */
+        .action-area {
+            margin-top: 30px;
+            padding-bottom: 30px;
+            animation: fadeIn 1.5s ease-out forwards;
+        }
+
+        .next-btn {
+            display: inline-block;
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 1.2rem;
+            padding: 16px 50px;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #800020, #ff003c);
+            box-shadow: 0 6px 20px rgba(255, 0, 60, 0.4);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 2px solid transparent;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 0, 60, 0.6);
+            background: linear-gradient(45deg, #ff003c, #ff4d6d);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            0% { opacity: 0; transform: translateY(-30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Card Entrance Animation Class */
+        .show-card {
+            animation: slideUpFade 0.6s ease forwards;
+        }
+
+        @keyframes slideUpFade {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Settings */
+        @media (max-width: 768px) {
+            .mode-card {
+                width: calc(50% - 20px);
+            }
+        }
+        @media (max-width: 600px) {
+            .mode-card {
+                width: 100%;
+            }
+            .header-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Background Symbols -->
+    <ul class="math-symbols" id="mathSymbols"></ul>
+
+    <div class="content-wrapper">
+        <h1 class="header-title">Game Modes Guide</h1>
+        <p class="header-subtitle">Learn how to master all 7 challenges before you start!</p>
+
+        <!-- Cards Container -->
+        <div class="modes-container" id="modesContainer">
+            
+            <div class="mode-card">
+                <div class="card-icon">🧮</div>
+                <h3 class="card-title">Mode 1: Classic Math</h3>
+                <p class="card-desc">Solve random basic arithmetic equations (+, -, ×, ÷) before the timer runs out.</p>
+            </div>
+
+            <div class="mode-card">
+                <div class="card-icon">➕</div>
+                <h3 class="card-title">Mode 2: Addition</h3>
+                <p class="card-desc">Focus purely on addition. Find the correct sum of the numbers shown on screen.</p>
+            </div>
+
+            <div class="mode-card">
+                <div class="card-icon">➖</div>
+                <h3 class="card-title">Mode 3: Subtraction</h3>
+                <p class="card-desc">Test your speed in finding the correct difference between two numbers.</p>
+            </div>
+
+            <div class="mode-card">
+                <div class="card-icon">➗</div>
+                <h3 class="card-title">Mode 4: Division</h3>
+                <p class="card-desc">Find the accurate quotient. Only divisions with whole number results are given.</p>
+            </div>
+
+            <div class="mode-card">
+                <div class="card-icon">🎯</div>
+                <h3 class="card-title">Mode 5: Target Pair</h3>
+                <p class="card-desc">You are given a target result (e.g., ? + ? = 8). Find the two correct numbers that make it true.</p>
+            </div>
+
+            <div class="mode-card">
+                <div class="card-icon">❓</div>
+                <h3 class="card-title">Mode 6: Middle Value</h3>
+                <p class="card-desc">Fill in the blank! Find the missing number in the middle of an equation (e.g., 5 + ? = 12).</p>
+            </div>
+
+            <div class="mode-card">
+                <div class="card-icon">🧠</div>
+                <h3 class="card-title">Mode 7: Memory Grid</h3>
+                <p class="card-desc">Watch the tiles light up, remember their positions, and click them in the correct order. The grid expands as you level up!</p>
+            </div>
+
+        </div>
+
+        <!-- Button to Menu Utama -->
+        <div class="action-area">
+            <a href="menu-utama.html" class="next-btn">Enter Main Menu</a>
+        </div>
+    </div>
+
+    <!-- JavaScript for Animations and Floating Symbols -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Generate Floating Symbols
+            const symbolsContainer = document.getElementById('mathSymbols');
+            const characters = ['+', '-', '×', '÷', '=', '?', '%', '1', '3', '7', '9'];
+            const totalSymbols = 20;
+
+            for (let i = 0; i < totalSymbols; i++) {
+                const li = document.createElement('li');
+                const randomChar = characters[Math.floor(Math.random() * characters.length)];
+                
+                li.textContent = randomChar;
+                li.style.left = `${Math.random() * 100}%`;
+                li.style.fontSize = `${Math.random() * 3 + 1.5}rem`;
+                li.style.animationDuration = `${Math.random() * 15 + 15}s`;
+                li.style.animationDelay = `${Math.random() * 10}s`;
+                
+                symbolsContainer.appendChild(li);
+            }
+
+            // 2. Staggered Entrance Animation for Cards
+            const cards = document.querySelectorAll('.mode-card');
+            cards.forEach((card, index) => {
+                // Adds a slight delay to each card so they appear one by one
+                setTimeout(() => {
+                    card.classList.add('show-card');
+                }, index * 150); // 150ms delay multiplier
+            });
+        });
+    </script>
+</body>
+</html>
