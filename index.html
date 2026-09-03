@@ -1,17 +1,212 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math Game - Selamat Datang</title>
-    <link rel="stylesheet" href="data/css/main.css">
+    <title>Math Game - Welcome</title>
+    
+    <!-- Internal CSS for Dark Cherry Blossom Theme -->
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Dark Black to Crimson Red Gradient Background */
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0000 50%, #4d0011 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+            overflow: hidden; 
+            position: relative;
+        }
+
+        /* Cherry Blossom Glowing Effects (Background Orbs) */
+        body::before, body::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            z-index: 0;
+        }
+
+        body::before {
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 0, 68, 0.15);
+            top: -50px;
+            left: -50px;
+        }
+
+        body::after {
+            width: 250px;
+            height: 250px;
+            background: rgba(128, 0, 32, 0.2);
+            bottom: -50px;
+            right: -50px;
+        }
+
+        /* --- FLOATING MATH SYMBOLS (Base Style) --- */
+        .math-symbols {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0; 
+            pointer-events: none; 
+            list-style: none;
+        }
+
+        .math-symbols li {
+            position: absolute;
+            display: block;
+            color: rgba(255, 255, 255, 0.3); /* White, somewhat transparent for contrast */
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+            bottom: -150px; 
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-120vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        /* ------------------------------------------- */
+
+        /* Glassmorphism Container */
+        .welcome-container {
+            position: relative;
+            z-index: 1;
+            background: rgba(15, 15, 15, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 3.5rem 2.5rem;
+            border-radius: 24px;
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            border: 1px solid rgba(255, 77, 109, 0.15);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(255, 0, 68, 0.15);
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        /* Title with Red Gradient Text */
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, #ff4d6d, #ff003c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 10px rgba(255, 0, 60, 0.2);
+        }
+
+        /* Subtitle */
+        p {
+            font-size: 1.1rem;
+            color: #d1d1d1;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+
+        /* Start Button */
+        .start-btn {
+            display: inline-block;
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 1.1rem;
+            padding: 14px 40px;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #800020, #ff003c);
+            box-shadow: 0 6px 20px rgba(255, 0, 60, 0.4);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border: 2px solid transparent;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 0, 60, 0.6);
+            background: linear-gradient(45deg, #ff003c, #ff4d6d);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .start-btn:active {
+            transform: translateY(2px) scale(0.98);
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+    </style>
 </head>
 <body>
+
+    <!-- Container for dynamic JS symbols -->
+    <ul class="math-symbols" id="mathSymbols"></ul>
+
+    <!-- Main Content -->
     <div class="welcome-container">
-        <h1>🎮 Selamat Datang di Math Game!</h1>
-        <p>Latih kemampuan matematika Anda dengan 7 mode permainan yang seru</p>
-        <a href="data/view/menu-utama.html" class="start-btn">Mulai Bermain</a>
+        <h1>🎮 Welcome to Math Game!</h1>
+        <p>Train your math skills with 7 exciting game modes.</p>
+        <a href="data/view/menu-utama.html" class="start-btn">Start Playing</a>
     </div>
+
+    <!-- Random Math Symbols Generator Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const symbolsContainer = document.getElementById('mathSymbols');
+            // Array containing numbers and math operators
+            const characters = ['+', '-', '×', '÷', '=', '?', '%', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+            
+            // How many symbols do you want floating around?
+            const totalSymbols = 25;
+
+            for (let i = 0; i < totalSymbols; i++) {
+                const li = document.createElement('li');
+                
+                // 1. Pick a random character
+                const randomChar = characters[Math.floor(Math.random() * characters.length)];
+                li.textContent = randomChar;
+
+                // 2. Randomize Position (0% to 100% from left)
+                const leftPos = Math.random() * 100;
+                li.style.left = `${leftPos}%`;
+
+                // 3. Randomize Size (1.5rem to 4.5rem)
+                const size = Math.random() * (4.5 - 1.5) + 1.5;
+                li.style.fontSize = `${size}rem`;
+
+                // 4. Randomize Animation Duration (12s to 25s)
+                const duration = Math.random() * (25 - 12) + 12;
+                li.style.animationDuration = `${duration}s`;
+
+                // 5. Randomize Animation Delay (so they don't start at the same time)
+                const delay = Math.random() * 15;
+                li.style.animationDelay = `${delay}s`;
+
+                // Add the element to the container
+                symbolsContainer.appendChild(li);
+            }
+        });
+    </script>
+
     <script src="data/js/main.js"></script>
 </body>
 </html>
