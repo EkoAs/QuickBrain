@@ -1,30 +1,30 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mode 1: Perkalian - Math Game</title>
+    <title>Mode 1: Multiplication - Math Game</title>
     <link rel="stylesheet" href="../../css/main.css">
     <link rel="stylesheet" href="../../css/mode-css/1-multiplication.css">
 </head>
 <body>
     <div class="game-container">
-        <!-- Header dengan Poin dan Timer -->
+        <!-- Header with Score and Timer -->
         <div class="game-header">
             <div class="score-display">
-                <span class="label">Poin:</span>
+                <span class="label">Score:</span>
                 <span id="score" class="value">0</span>
             </div>
             <div class="timer-display">
-                <span class="label">Waktu:</span>
+                <span class="label">Time:</span>
                 <span id="timer" class="value">10</span>
             </div>
         </div>
 
-        <!-- Area Game -->
+        <!-- Game Area -->
         <div id="gameArea" class="game-area">
             <div class="question-box">
-                <h2 id="question">Memuat soal...</h2>
+                <h2 id="question">Loading question...</h2>
             </div>
 
             <div class="answers-grid">
@@ -37,9 +37,9 @@
 
         <!-- Game Over Screen -->
         <div id="gameOver" class="game-over hidden">
-            <h2>Game Selesai!</h2>
+            <h2>Game Over!</h2>
             <div class="final-score">
-                <p>Poin Akhir:</p>
+                <p>Final Score:</p>
                 <span id="finalScore">0</span>
             </div>
 
@@ -48,8 +48,8 @@
             </div>
             
             <div class="game-over-buttons">
-                <button id="restartBtn" class="btn-primary">Main Lagi</button>
-                <a href="../menu-utama.html" class="btn-secondary">Kembali ke Menu</a>
+                <button id="restartBtn" class="btn-primary">Play Again</button>
+                <a href="../menu-utama.html" class="btn-secondary">Back to Menu</a>
             </div>
         </div>
     </div>
