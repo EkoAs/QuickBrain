@@ -1,47 +1,76 @@
-/* Mode 3: Subtraction mode-specific styles */
-/* Mode 2: Addition mode-specific styles */
-/* Mode 1: Multiplication - Styling khusus */
+/* ==========================================================================
+   MODE 3: SUBTRACTION - CRIMSON AURORA SPACE (PART 1: BASE & LAYOUT)
+   ========================================================================== */
 
+/* Latar belakang utama agak gelap di atas seperti luar angkasa */
+body {
+    margin: 0;
+    overflow: hidden;
+    background-color: #050005;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
+}
+
+/* =========================================
+   CONTAINER TRANSLUSENT (GLASSMORPHISM)
+   ========================================= */
 .game-container {
     width: 90%;
     max-width: 600px;
-    background: white;
+    /* Efek Kaca Transparan / Blur */
+    background: rgba(15, 0, 5, 0.4); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-radius: 20px;
-    padding: 2rem;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    padding: 2.5rem;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 0, 60, 0.1);
+    border: 1px solid rgba(255, 77, 109, 0.2);
+    position: relative;
+    z-index: 10;
 }
 
-/* Header dengan Score dan Timer */
+/* =========================================
+   HEADER (SCORE & TIMER)
+   ========================================= */
 .game-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2rem;
-    padding: 1rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 1rem 1.5rem;
+    background: rgba(0, 0, 0, 0.5);
     border-radius: 15px;
+    border: 1px solid rgba(255, 77, 109, 0.15);
     color: white;
 }
 
-.score-display,
-.timer-display {
+.score-display, .timer-display {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .game-header .label {
-    font-size: 0.9rem;
-    opacity: 0.9;
-    margin-bottom: 0.3rem;
+    font-size: 0.85rem;
+    color: #ff8096;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .game-header .value {
-    font-size: 2rem;
-    font-weight: bold;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 0, 60, 0.8);
 }
 
-/* Area Game */
+/* =========================================
+   AREA SOAL & JAWABAN
+   ========================================= */
 .game-area {
     display: flex;
     flex-direction: column;
@@ -49,56 +78,157 @@
 }
 
 .question-box {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    background: rgba(30, 0, 10, 0.4);
     padding: 2rem;
     border-radius: 15px;
     text-align: center;
+    border: 1px solid rgba(255, 0, 60, 0.3);
+    box-shadow: inset 0 0 15px rgba(255, 0, 60, 0.1);
 }
 
 .question-box h2 {
-    color: white;
-    font-size: 2.5rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+    font-size: 3.5rem;
+    margin: 0;
+    text-shadow: 0 0 15px rgba(255, 0, 60, 0.9);
 }
 
 /* Grid Jawaban */
 .answers-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    gap: 1.2rem;
 }
 
 .answer-btn {
-    padding: 2rem 1rem;
-    font-size: 1.8rem;
+    padding: 1.5rem 1rem;
+    font-size: 2rem;
     font-weight: bold;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border: none;
+    color: #ffffff;
+    /* Kaca untuk tombol */
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 77, 109, 0.3);
     border-radius: 15px;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
 }
 
 .answer-btn:hover {
+    background: rgba(255, 0, 60, 0.2);
+    border-color: rgba(255, 77, 109, 0.8);
+    box-shadow: 0 0 20px rgba(255, 0, 60, 0.4);
     transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
 }
 
 .answer-btn:active {
-    transform: translateY(0);
+    transform: translateY(2px);
 }
 
+/* Status Jawaban */
 .answer-btn.correct {
-    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    background: rgba(0, 255, 128, 0.3);
+    border-color: #00ff80;
+    box-shadow: 0 0 25px rgba(0, 255, 128, 0.5);
     animation: pulse 0.5s;
 }
 
 .answer-btn.wrong {
-    background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+    background: rgba(255, 0, 0, 0.3);
+    border-color: #ff0000;
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.5);
     animation: shake 0.5s;
 }
 
+/* Game Over Layar Kaca */
+.game-over {
+    text-align: center;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 2.5rem 2rem;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 0, 60, 0.3);
+}
+
+.game-over.hidden {
+    display: none;
+}
+
+.game-over h2 {
+    font-size: 2.5rem;
+    color: #ffffff;
+    text-shadow: 0 0 15px #ff003c;
+    margin-bottom: 1rem;
+}
+
+/* ==========================================================================
+   MODE 3: SUBTRACTION (PART 2: ANIMATIONS & GAME OVER)
+   ========================================================================== */
+
+/* Detail Game Over */
+.final-score {
+    margin-bottom: 2rem;
+}
+
+.final-score p {
+    font-size: 1.2rem;
+    color: #ff8096;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.final-score span {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #ff003c;
+    text-shadow: 0 0 20px rgba(255, 0, 60, 0.6);
+}
+
+.game-over-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-primary {
+    background: #ff003c;
+    color: white;
+    border: none;
+    box-shadow: 0 0 15px rgba(255, 0, 60, 0.5);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: #ff003c;
+    border: 2px solid #ff003c;
+}
+
+.btn-primary:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(255, 0, 60, 0.8);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 0, 60, 0.1);
+    transform: scale(1.05);
+}
+
+/* =========================================
+   ANIMASI BUTTON & TIMER
+   ========================================= */
 @keyframes pulse {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.1); }
@@ -110,134 +240,141 @@
     75% { transform: translateX(10px); }
 }
 
-/* Game Over Screen */
-.game-over {
-    text-align: center;
-}
-
-.game-over.hidden {
-    display: none;
-}
-
-.game-over h2 {
-    font-size: 2.5rem;
-    color: #667eea;
-    margin-bottom: 2rem;
-}
-
-.final-score {
-    margin-bottom: 2rem;
-}
-
-.final-score p {
-    font-size: 1.2rem;
-    color: #666;
-    margin-bottom: 0.5rem;
-}
-
-.final-score span {
-    font-size: 4rem;
-    font-weight: bold;
-    color: #f5576c;
-}
-
-.game-over-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.btn-primary,
-.btn-secondary {
-    padding: 1rem 2rem;
-    border-radius: 50px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    transition: transform 0.3s;
-}
-
-.btn-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-}
-
-.btn-secondary {
-    background: white;
-    color: #667eea;
-    border: 2px solid #667eea;
-}
-
-.btn-primary:hover,
-.btn-secondary:hover {
-    transform: scale(1.05);
-}
-
-/* Responsive - Mobile First */
-@media (max-width: 768px) {
-    .game-container {
-        padding: 1.5rem;
-    }
-
-    .game-header {
-        flex-direction: row;
-        padding: 1rem;
-    }
-
-    .game-header .value {
-        font-size: 1.5rem;
-    }
-
-    .question-box h2 {
-        font-size: 2rem;
-    }
-
-    .answer-btn {
-        padding: 1.5rem 1rem;
-        font-size: 1.5rem;
-    }
-
-    .final-score span {
-        font-size: 3rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .game-header .value {
-        font-size: 1.3rem;
-    }
-
-    .game-header .label {
-        font-size: 0.8rem;
-    }
-
-    .question-box {
-        padding: 1.5rem;
-    }
-
-    .question-box h2 {
-        font-size: 1.5rem;
-    }
-
-    .answer-btn {
-        padding: 1rem;
-        font-size: 1.2rem;
-    }
-
-    .answers-grid {
-        gap: 0.8rem;
-    }
-}
-
-/* Animasi Timer Warning */
 .timer-warning {
     animation: timerBlink 0.5s infinite;
 }
 
 @keyframes timerBlink {
-    0%, 100% { color: white; }
-    50% { color: #ff0000; }
+    0%, 100% { color: #ff003c; text-shadow: 0 0 15px rgba(255, 0, 60, 0.8); }
+    50% { color: #ffffff; text-shadow: 0 0 20px #ffffff; }
+}
+
+/* =========================================
+   ANIMASI BACKGROUND (AURORA & STARS)
+   ========================================= */
+
+/* Efek Aurora: Gradasi Bergerak Lembut */
+.aurora-bg {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 1;
+    background: linear-gradient(45deg, #050005, #3a0010, #050005, #1a0005, #4d0015);
+    background-size: 400% 400%;
+    animation: auroraMove 15s ease infinite;
+    opacity: 0.9;
+}
+
+@keyframes auroraMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Wadah Bintang */
+#starfield {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 2;
+    pointer-events: none; /* Agar tidak menghalangi klik game */
+    overflow: hidden;
+}
+
+/* Bintang Kelap-Kelip (Twinkling) */
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 4px white;
+    animation: twinkle infinite linear;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.1; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.3); }
+}
+
+/* Bintang Jatuh (Vertikal / Miring) */
+.shooting-star {
+    position: absolute;
+    width: 2px;
+    height: 60px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+    transform: rotate(-25deg);
+    animation: shoot 2s linear forwards;
+    filter: drop-shadow(0 0 5px white);
+}
+
+@keyframes shoot {
+    0% { transform: rotate(-25deg) translateY(-50px); opacity: 1; }
+    100% { transform: rotate(-25deg) translateY(120vh); opacity: 0; }
+}
+
+/* Komet (Horizontal) */
+.comet {
+    position: absolute;
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(to right, rgba(255, 100, 130, 1), rgba(255, 0, 60, 0));
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(255, 0, 60, 0.8);
+    animation-duration: 4s;
+    animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+    animation-fill-mode: forwards;
+}
+
+@keyframes cometMoveRight {
+    0% { transform: translateX(0) scale(1); opacity: 1; }
+    100% { transform: translateX(120vw) scale(0.3); opacity: 0; }
+}
+
+@keyframes cometMoveLeft {
+    0% { transform: rotate(180deg) translateX(0) scale(1); opacity: 1; }
+    100% { transform: rotate(180deg) translateX(120vw) scale(0.3); opacity: 0; }
+}
+
+/* =========================================
+   RESPONSIVE (HP & TABLET)
+   ========================================= */
+@media (max-width: 768px) {
+    .game-container {
+        padding: 2rem 1.5rem;
+        width: 95%;
+    }
+    .question-box h2 {
+        font-size: 3rem;
+    }
+    .answer-btn {
+        font-size: 1.6rem;
+        padding: 1.2rem;
+    }
+    .game-header .value {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-header {
+        padding: 0.8rem;
+    }
+    .game-header .value {
+        font-size: 1.4rem;
+    }
+    .question-box {
+        padding: 1.5rem 1rem;
+    }
+    .question-box h2 {
+        font-size: 2.2rem;
+    }
+    .answer-btn {
+        font-size: 1.3rem;
+        padding: 1rem;
+    }
+    .answers-grid {
+        gap: 0.8rem;
+    }
+    .final-score span {
+        font-size: 3rem;
+    }
 }

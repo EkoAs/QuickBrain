@@ -1,17 +1,17 @@
-<!-- Subtraction game mode placeholder -->
-<!-- Addition game mode placeholder -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--page name -->
     <title>Mode 3: Subtraction - Math Game</title>
     <link rel="stylesheet" href="../../css/main.css">
-    <!-- call file CSS Mode 2 -->
     <link rel="stylesheet" href="../../css/mode-css/3-subtraction.css">
 </head>
 <body>
+    <!-- Animasi Background Space & Aurora -->
+    <div class="aurora-bg"></div>
+    <div id="starfield"></div>
+
     <div class="game-container">
         <!-- Header Score and Timer -->
         <div class="game-header">
@@ -47,7 +47,7 @@
                 <span id="finalScore">0</span>
             </div>
 
-            <div class="correct-answer-info" style="margin: 15px 0; color: #ff4444; font-weight: bold; font-size: 1.1rem;">
+            <div class="correct-answer-info" style="margin: 15px 0; color: #ff4d6d; font-weight: bold; font-size: 1.1rem;">
                 <p id="correctAnswerMessage"></p>
             </div>
             
@@ -58,8 +58,68 @@
         </div>
     </div>
 
+    <!-- JavaScript Khusus Animasi Background -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const starfield = document.getElementById("starfield");
+            
+            // 1. Membuat Bintang Berkelip (Twinkling Stars)
+            const numStars = 80;
+            for(let i = 0; i < numStars; i++) {
+                let star = document.createElement("div");
+                star.classList.add("star");
+                star.style.left = `${Math.random() * 100}vw`;
+                star.style.top = `${Math.random() * 100}vh`;
+                star.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                starfield.appendChild(star);
+            }
+
+            // 2. Fungsi memunculkan Bintang Jatuh (Vertikal/Miring)
+            function spawnShootingStar() {
+                let shootingStar = document.createElement("div");
+                shootingStar.classList.add("shooting-star");
+                shootingStar.style.left = `${Math.random() * 100}vw`;
+                shootingStar.style.top = `-10px`;
+                starfield.appendChild(shootingStar);
+
+                // Hapus elemen setelah animasi selesai (2 detik)
+                setTimeout(() => {
+                    shootingStar.remove();
+                }, 2000);
+            }
+
+            // 3. Fungsi memunculkan Komet (Horizontal) - Hanya Layar Besar
+            function spawnComet() {
+                if (window.innerWidth > 768) {
+                    let comet = document.createElement("div");
+                    comet.classList.add("comet");
+                    comet.style.top = `${Math.random() * 40}vh`; // Muncul di area atas
+                    // Muncul dari kiri atau kanan secara acak
+                    if (Math.random() > 0.5) {
+                        comet.style.left = `-100px`;
+                        comet.style.animationName = `cometMoveRight`;
+                    } else {
+                        comet.style.right = `-100px`;
+                        comet.style.transform = "rotate(180deg)";
+                        comet.style.animationName = `cometMoveLeft`;
+                    }
+                    starfield.appendChild(comet);
+
+                    // Hapus elemen setelah animasi selesai (4 detik)
+                    setTimeout(() => {
+                        comet.remove();
+                    }, 4000);
+                }
+            }
+
+            // Interval kemunculan meteor dan komet
+            setInterval(spawnShootingStar, 4000); // Bintang jatuh setiap 4 detik
+            setInterval(spawnComet, 12000);       // Komet setiap 12 detik
+        });
+    </script>
+
     <script src="../../js/main.js"></script>
-    <!-- CHANGE: call file JS Mode 3 -->
     <script src="../../js/logic/3-subtraction.js"></script>
 </body>
 </html>
