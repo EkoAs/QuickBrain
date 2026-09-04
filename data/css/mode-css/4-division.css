@@ -1,68 +1,125 @@
-/* Mode 4: Division mode-specific styles */
-/* Mode 3: Subtraction mode-specific styles */
-/* Mode 2: Addition mode-specific styles */
-/* Mode 1: Multiplication - Styling khusus */
+/* ==========================================================================
+   MODE 4: DIVISION - MULTICOLOR AURORA (RED, BLUE, YELLOW)
+   ========================================================================== */
 
-.game-container {
-    width: 90%;
-    max-width: 600px;
-    background: white;
-    border-radius: 20px;
-    padding: 2rem;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+body {
+    margin: 0;
+    overflow: hidden;
+    background-color: #030005; /* Langit hitam/gelap */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
 }
 
-/* Header dengan Score dan Timer */
+/* =========================================
+   AURORA BACKGROUND ANIMATION (CSS ONLY)
+   ========================================= */
+.aurora-wrapper {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: 0;
+    overflow: hidden;
+    background: #000;
+}
+
+.aurora {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px); /* Kunci agar terlihat seperti cahaya aurora */
+    opacity: 0.6;
+    animation: floatAurora 12s infinite alternate ease-in-out;
+}
+
+.aurora-red {
+    background-color: #ff003c;
+    width: 60vw; height: 60vh;
+    top: -10%; left: -10%;
+}
+
+.aurora-blue {
+    background-color: #0066ff;
+    width: 55vw; height: 55vh;
+    bottom: -10%; right: -10%;
+    animation-delay: -4s;
+}
+
+.aurora-yellow {
+    background-color: #ffcc00;
+    width: 45vw; height: 45vh;
+    top: 30%; left: 30%;
+    animation-delay: -8s;
+}
+
+@keyframes floatAurora {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(10vw, 15vh) scale(1.1); }
+    100% { transform: translate(-15vw, 5vh) scale(0.9); }
+}
+
+/* =========================================
+   UI CONTAINER & LAYOUT (SIMPLE BLOSSOM THEME)
+   ========================================= */
+.game-container {
+    width: 90%;
+    max-width: 550px;
+    background: rgba(10, 0, 5, 0.75); /* Hitam transparan */
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(255, 0, 60, 0.4);
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 0, 60, 0.15);
+    position: relative;
+    z-index: 10;
+}
+
+/* Header */
 .game-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     margin-bottom: 2rem;
-    padding: 1rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 15px;
-    color: white;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 0, 60, 0.3);
 }
 
-.score-display,
-.timer-display {
+.score-display, .timer-display {
     display: flex;
     flex-direction: column;
-    align-items: center;
-}
-
-.game-header .label {
-    font-size: 0.9rem;
-    opacity: 0.9;
-    margin-bottom: 0.3rem;
-}
-
-.game-header .value {
-    font-size: 2rem;
-    font-weight: bold;
-}
-
-/* Area Game */
-.game-area {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.question-box {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    padding: 2rem;
-    border-radius: 15px;
     text-align: center;
 }
 
-.question-box h2 {
-    color: white;
-    font-size: 2.5rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+.label {
+    font-size: 0.9rem;
+    color: #ff8096;
+    text-transform: uppercase;
 }
 
-/* Grid Jawaban */
+.value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* Question Area */
+.question-box {
+    background: #000000;
+    padding: 1.5rem;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid #ff003c;
+    margin-bottom: 1.5rem;
+    box-shadow: inset 0 0 15px rgba(255, 0, 60, 0.2);
+}
+
+.question-box h2 {
+    color: #ffffff;
+    font-size: 3rem;
+    margin: 0;
+}
+
+/* Answers Grid */
 .answers-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -70,175 +127,85 @@
 }
 
 .answer-btn {
-    padding: 2rem 1rem;
+    background: #0a0003;
+    border: 1px solid #ff003c;
+    color: #ffffff;
+    padding: 1.2rem;
     font-size: 1.8rem;
     font-weight: bold;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border: none;
-    border-radius: 15px;
+    border-radius: 10px;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: all 0.2s ease;
 }
 
 .answer-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    background: #ff003c;
+    color: #ffffff;
+    box-shadow: 0 0 15px #ff003c;
 }
 
-.answer-btn:active {
-    transform: translateY(0);
-}
-
-.answer-btn.correct {
-    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-    animation: pulse 0.5s;
-}
-
-.answer-btn.wrong {
-    background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
-    animation: shake 0.5s;
-}
-
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-}
-
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-10px); }
-    75% { transform: translateX(10px); }
-}
+/* Correct/Wrong State */
+.answer-btn.correct { background: #00ff80; border-color: #00ff80; color: #000; }
+.answer-btn.wrong { background: #ff0000; border-color: #ff0000; color: #fff; }
 
 /* Game Over Screen */
 .game-over {
     text-align: center;
 }
 
-.game-over.hidden {
-    display: none;
-}
-
-.game-over h2 {
-    font-size: 2.5rem;
-    color: #667eea;
-    margin-bottom: 2rem;
-}
-
-.final-score {
-    margin-bottom: 2rem;
-}
-
-.final-score p {
-    font-size: 1.2rem;
-    color: #666;
-    margin-bottom: 0.5rem;
-}
-
-.final-score span {
-    font-size: 4rem;
-    font-weight: bold;
-    color: #f5576c;
-}
+.game-over.hidden { display: none; }
+.game-over h2 { font-size: 2.2rem; color: #ff003c; margin-bottom: 0.5rem; }
+.final-score span { font-size: 3.5rem; font-weight: bold; color: #fff; }
 
 .game-over-buttons {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    margin-top: 1.5rem;
 }
 
-.btn-primary,
-.btn-secondary {
-    padding: 1rem 2rem;
-    border-radius: 50px;
+.btn-primary, .btn-secondary {
+    padding: 1rem;
+    border-radius: 8px;
     font-size: 1.1rem;
     font-weight: bold;
-    border: none;
     cursor: pointer;
     text-decoration: none;
-    display: inline-block;
-    transition: transform 0.3s;
+    text-transform: uppercase;
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #ff003c;
     color: white;
+    border: none;
 }
 
 .btn-secondary {
-    background: white;
-    color: #667eea;
-    border: 2px solid #667eea;
+    background: transparent;
+    color: #ff003c;
+    border: 2px solid #ff003c;
 }
 
-.btn-primary:hover,
-.btn-secondary:hover {
-    transform: scale(1.05);
-}
+.btn-primary:hover { background: #d60032; }
+.btn-secondary:hover { background: rgba(255, 0, 60, 0.1); }
 
-/* Responsive - Mobile First */
-@media (max-width: 768px) {
-    .game-container {
-        padding: 1.5rem;
-    }
-
-    .game-header {
-        flex-direction: row;
-        padding: 1rem;
-    }
-
-    .game-header .value {
-        font-size: 1.5rem;
-    }
-
-    .question-box h2 {
-        font-size: 2rem;
-    }
-
-    .answer-btn {
-        padding: 1.5rem 1rem;
-        font-size: 1.5rem;
-    }
-
-    .final-score span {
-        font-size: 3rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .game-header .value {
-        font-size: 1.3rem;
-    }
-
-    .game-header .label {
-        font-size: 0.8rem;
-    }
-
-    .question-box {
-        padding: 1.5rem;
-    }
-
-    .question-box h2 {
-        font-size: 1.5rem;
-    }
-
-    .answer-btn {
-        padding: 1rem;
-        font-size: 1.2rem;
-    }
-
-    .answers-grid {
-        gap: 0.8rem;
-    }
-}
-
-/* Animasi Timer Warning */
+/* Animasi Timer Kritis */
 .timer-warning {
-    animation: timerBlink 0.5s infinite;
+    color: #ff003c !important;
+    animation: blink 0.5s infinite alternate;
 }
 
-@keyframes timerBlink {
-    0%, 100% { color: white; }
-    50% { color: #ff0000; }
+@keyframes blink {
+    from { opacity: 1; }
+    to { opacity: 0.5; transform: scale(1.1); }
+}
+
+/* =========================================
+   RESPONSIVE DESIGN (HP)
+   ========================================= */
+@media (max-width: 480px) {
+    .game-container { padding: 1.5rem; }
+    .question-box h2 { font-size: 2.5rem; }
+    .answer-btn { font-size: 1.5rem; padding: 1rem; }
+    .value { font-size: 1.5rem; }
 }
