@@ -207,8 +207,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 Have questions or suggestions? Feel free to reach out!
 
-- **GitHub:** [@your-username](https://github.com/your-username)
-- **Project Link:** [https://github.com/your-username/QuickBrain](https://github.com/your-username/QuickBrain)
+- **GitHub:** [@EkoAs](https://github.com/your-username)
+- **Project Link:** [https://github.com/EkoAs](https://github.com/EkoAs/QuickBrain)
 
 ---
 
