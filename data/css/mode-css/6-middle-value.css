@@ -144,7 +144,7 @@ body {
     transform: translateY(0);
 }
 
-/* Status Jawaban Benar / Salah */
+/* Answer Status Correct / Wrong */
 .answer-btn.correct {
     background: #00e676;
     border-color: #00e676;

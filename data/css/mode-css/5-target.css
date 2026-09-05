@@ -145,7 +145,7 @@ body {
     transform: scale(1.05);
 }
 
-/* Status Benar / Salah */
+/* Status Correct / Wrong */
 .target-btn.correct, .answer-btn.correct {
     background: rgba(16, 185, 129, 0.2);
     border-color: #10b981;

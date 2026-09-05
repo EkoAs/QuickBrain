@@ -1,4 +1,3 @@
-<!-- Memory game mode placeholder -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,20 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mode 7: Memory Grid - Math Game</title>
     <link rel="stylesheet" href="../../css/main.css">
+    <link rel="icon" type="image/svg+xml" href="https://ui-avatars.com/api/?name=Math+Game&background=0ea5e9&color=fff&size=128&bold=true">
     <!-- Load specific CSS for Mode 7 -->
     <link rel="stylesheet" href="../../css/mode-css/7-memory.css">
 </head>
 <body>
+    <!-- Background Bintang Jatuh (Space Theme) -->
+    <div class="space-bg">
+        <div class="stars"></div>
+        <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
+    </div>
+
     <div class="game-container">
         <!-- Header with Level and Status -->
+        <!-- Header with Level, Status, and Timer -->
         <div class="game-header">
             <div class="score-display">
                 <span class="label">Level:</span>
                 <span id="score" class="value">1</span>
             </div>
-            <div class="timer-display">
+            
+            <div class="status-display" style="display: flex; flex-direction: column; align-items: center;">
                 <span class="label">Status:</span>
-                <span id="statusText" class="value">Get Ready!</span>
+                <span id="statusText" class="value text-glow">Get Ready!</span>
+            </div>
+
+            <div class="timer-display" style="display: flex; flex-direction: column; align-items: center;">
+                <span class="label">Time:</span>
+                <span id="timer" class="value">20</span>
             </div>
         </div>
 
@@ -32,6 +48,7 @@
             <!-- Dynamic Memory Grid Container -->
             <div id="memoryGrid" class="memory-grid">
                 <!-- JavaScript will generate the tiles here -->
+                <!-- Contoh kotak yang di-generate JS: <div class="memory-tile"></div> -->
             </div>
         </div>
 

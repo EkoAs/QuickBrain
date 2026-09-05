@@ -1,44 +1,217 @@
-/* Mode 7: Memory mode-specific styles */
-/* Specific CSS for Mode 7: Memory Grid */
+/* ==========================================================================
+   MODE 7: MEMORY GRID - SPACE THEME (SHARP CORNERS)
+   ========================================================================== */
 
+/* Dark Space Background */
+body {
+    margin: 0;
+    overflow: hidden;
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* =========================================
+   SHOOTING STAR ANIMATION (SPACE BACKGROUND)
+   ========================================= */
+.space-bg {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+/* Static stars (white dots) */
+.stars {
+    width: 2px;
+    height: 2px;
+    background: transparent;
+    box-shadow: 15vw 20vh #fff, 80vw 10vh #fff, 50vw 50vh #fff, 20vw 80vh #fff, 
+                70vw 70vh #fff, 90vw 40vh #fff, 30vw 30vh #fff, 60vw 85vh #fff,
+                40vw 15vh #fff, 10vw 60vh #fff, 85vw 90vh #fff, 75vw 25vh #fff;
+    animation: twinkle 3s infinite alternate;
+}
+
+@keyframes twinkle {
+    0% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
+
+/* Bintang Jatuh */
+.shooting-star {
+    position: absolute;
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(255,255,255,1), rgba(255,255,255,0));
+    animation: shooting 4s linear infinite;
+    opacity: 0;
+}
+
+.shooting-star:nth-child(1) { top: 10%; left: -10%; animation-delay: 0s; }
+.shooting-star:nth-child(2) { top: 30%; left: -10%; animation-delay: 2s; }
+.shooting-star:nth-child(3) { top: 60%; left: -10%; animation-delay: 1.5s; }
+.shooting-star:nth-child(4) { top: 80%; left: -10%; animation-delay: 3.5s; }
+
+@keyframes shooting {
+    0% { transform: translateX(0) translateY(0) rotate(20deg); opacity: 1; }
+    100% { transform: translateX(120vw) translateY(40vh) rotate(20deg); opacity: 0; }
+}
+
+/* =========================================
+   CONTAINER & GAME HEADER
+   ========================================= */
+.game-container {
+    width: 90%;
+    max-width: 500px;
+    background: rgba(15, 23, 42, 0.6); /* Transparent dark blue */
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    position: relative;
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.score-display, .timer-display { display: flex; flex-direction: column; align-items: center; }
+.label { font-size: 0.9rem; color: #94a3b8; text-transform: uppercase; margin-bottom: 5px; }
+.value { font-size: 1.8rem; font-weight: bold; color: #ffffff; }
+.text-glow { text-shadow: 0 0 10px #38bdf8; color: #38bdf8; }
+
+.question-box { text-align: center; margin-bottom: 1.5rem; }
+.question-box h2 { font-size: 1.5rem; color: #e2e8f0; font-weight: 500; letter-spacing: 1px; margin: 0; }
+
+/* =========================================
+   MEMORY GRID & TILES (BOXES)
+   ========================================= */
 .memory-grid {
     display: grid;
-    gap: 8px;
-    width: 100%;
-    max-width: 350px;
-    margin: 20px auto;
-    aspect-ratio: 1 / 1; /* Keeps the grid perfectly square */
+    /* Grid width is full, JS will set grid-template-columns based on level */
+    width: 100%; 
+    gap: 12px; /* Space between boxes */
+    margin: 0 auto;
 }
 
 .memory-tile {
-    background-color: #e0e0e0;
-    border-radius: 8px;
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Ensure boxes are always square */
+    background-color: #64748b; /* Gray base contrasting with background */
+    border-radius: 0 !important; /* Force box corners to be sharp (0) */
     cursor: pointer;
-    transition: transform 0.1s, background-color 0.3s;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 0 4px 6px rgba(0,0,0,0.3);
+    transition: all 0.2s ease-in-out;
+    border: 2px solid transparent;
 }
 
-.memory-tile:active {
-    transform: scale(0.95);
+.memory-tile:hover {
+    filter: brightness(1.2);
 }
 
-/* Highlight state (the pattern to remember) */
-.memory-tile.highlight {
-    background-color: #ff9800; /* Orange color to remember */
-}
-
-/* Correct click by user */
-.memory-tile.correct {
-    background-color: #4CAF50; /* Green */
-}
-
-/* Wrong click by user */
-.memory-tile.wrong {
-    background-color: #f44336; /* Red */
-}
-
-/* Disable clicking when showing pattern */
+/* ACTIVE / CORRECT BOX -> GLOWING RED */
 .memory-tile.disabled {
     pointer-events: none;
-    cursor: default;
+}
+
+/* GLOWING BOX (When pattern appears) & CORRECT BOX -> GLOWING RED */
+.memory-tile.highlight,
+.memory-tile.active, 
+.memory-tile.correct {
+    background-color: #ff003c !important; /* Glowing red */
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 25px #ff003c, inset 0 0 10px rgba(255,255,255,0.4);
+    transform: scale(1.05);
+}
+
+/* WRONG BOX -> GLOWING YELLOW */
+.memory-tile.wrong {
+    background-color: #ffea00 !important; /* Glowing yellow */
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 25px #ffea00, inset 0 0 10px rgba(255,255,255,0.5);
+    transform: scale(1.05);
+    animation: shakeMemory 0.4s;
+}
+
+
+@keyframes shakeMemory {
+    0%, 100% { transform: scale(1.05) translateX(0); }
+    25% { transform: scale(1.05) translateX(-5px); }
+    75% { transform: scale(1.05) translateX(5px); }
+}
+
+/* =========================================
+   GAME OVER SCREEN
+   ========================================= */
+.game-over {
+    text-align: center;
+    background: rgba(15, 23, 42, 0.95);
+    padding: 2rem;
+    position: absolute;
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    min-height: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    z-index: 20;
+    box-sizing: border-box;
+}
+
+.game-over.hidden { display: none; }
+
+.game-over h2 { font-size: 2.5rem; color: #ff003c; text-shadow: 0 0 15px #ff003c; margin-bottom: 1rem; }
+.final-score p { font-size: 1.2rem; color: #94a3b8; }
+.final-score span { font-size: 4rem; font-weight: bold; color: #fff; text-shadow: 0 0 20px rgba(255,255,255,0.5); }
+
+.game-over-buttons { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; width: 80%; }
+
+.btn-primary, .btn-secondary {
+    padding: 1rem; border-radius: 4px; /* Dibuat sedikit kotak menyesuaikan tema memori */
+    font-size: 1.1rem; font-weight: bold; text-align: center;
+    cursor: pointer; text-decoration: none; text-transform: uppercase; transition: all 0.3s;
+}
+.btn-primary { background: #38bdf8; color: #000; border: none; box-shadow: 0 0 15px rgba(56, 189, 248, 0.5); }
+.btn-primary:hover { background: #0ea5e9; box-shadow: 0 0 25px rgba(56, 189, 248, 0.8); }
+.btn-secondary { background: transparent; color: #94a3b8; border: 2px solid #475569; }
+.btn-secondary:hover { background: #1e293b; color: #fff; border-color: #94a3b8; }
+
+/* =========================================
+   RESPONSIVE DESIGN (TABLET & MOBILE)
+   ========================================= */
+@media (max-width: 600px) {
+    .game-container { 
+        width: 100%; /* On mobile, container width is full (close to screen edges) */
+        max-width: none; 
+        padding: 1.5rem 1rem; 
+        border-radius: 0; /* Remove border-radius on mobile for spacious feel */
+        border: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .game-header { padding: 0.8rem 1rem; margin-bottom: 1.5rem; }
+    .value { font-size: 1.5rem; }
+    .question-box h2 { font-size: 1.2rem; }
+    
+    .memory-grid {
+        width: 100%; /* GRID BOXES FULL WIDTH */
+        gap: 8px; /* Space between boxes slightly smaller on mobile for neatness */
+    }
 }

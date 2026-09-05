@@ -29,7 +29,7 @@ function generateQuestion() {
     const num2 = randomInt(1, 10);
     const correctAnswer = num1 * num2;
     
-    // Generate 3 wrong answers (jebakan)
+    // Generate 3 wrong answers (decoys)
     const wrongAnswers = [];
     while (wrongAnswers.length < 3) {
         let wrong;
@@ -39,20 +39,20 @@ function generateQuestion() {
             // Correct answer ± (1-5)
             wrong = correctAnswer + randomInt(-5, 5);
         } else if (randomChoice === 2) {
-            // Correct answer × 2 atau ÷ 2
+            // Correct answer × 2 or ÷ 2
             wrong = randomInt(0, 1) === 0 ? correctAnswer * 2 : Math.floor(correctAnswer / 2);
         } else {
-            // Random dalam range wajar
+            // Random in reasonable range
             wrong = randomInt(correctAnswer - 10, correctAnswer + 10);
         }
         
-        // Pastikan tidak duplikat dan tidak sama dengan jawaban benar
+        // Ensure no duplicates and not equal to correct answer
         if (wrong !== correctAnswer && wrong > 0 && !wrongAnswers.includes(wrong)) {
             wrongAnswers.push(wrong);
         }
     }
     
-    // Gabungkan semua jawaban dan shuffle
+    // Combine all answers and shuffle
     const allAnswers = [correctAnswer, ...wrongAnswers];
     shuffleArray(allAnswers);
     
@@ -91,14 +91,14 @@ function startTimer() {
         timer--;
         timerElement.textContent = timer;
         
-        // Warning effect saat waktu tinggal 3 detik
+        // Warning effect when time is 3 seconds or less
         if (timer <= 3) {
             timerElement.classList.add('timer-warning');
         } else {
             timerElement.classList.remove('timer-warning');
         }
         
-        // Game over jika waktu habis
+        // Game over if time runs out
         if (timer <= 0) {
             stopTimer();
             endGame();
@@ -134,7 +134,7 @@ function checkAnswer(selectedAnswer) {
     stopTimer();
     
     if (selectedAnswer === currentQuestion.correctAnswer) {
-        // Jawaban benar
+        // Correct answer
         score++;
         scoreElement.textContent = score;
         playSound('correct');
@@ -146,12 +146,12 @@ function checkAnswer(selectedAnswer) {
             }
         });
         
-        // Next question setelah delay
+        // Next question after delay
         setTimeout(() => {
             displayQuestion();
         }, 1000);
     } else {
-        // Jawaban salah - game over
+        // Wrong answer - game over
         playSound('wrong');
         
         // Highlight wrong and correct answers

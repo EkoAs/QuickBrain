@@ -13,7 +13,7 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Panel Utama Game (Kaca Gelap / Transparan) */
+/* Main Game Panel (Dark Glass / Transparent) */
 .game-container {
     width: 90%;
     max-width: 600px;
@@ -116,7 +116,7 @@ body {
     transform: scale(0.95);
 }
 
-/* Status Jawaban Benar / Salah */
+/* Answer Status Correct / Wrong */
 .answer-btn.correct {
     background: #00e676;
     border-color: #00e676;

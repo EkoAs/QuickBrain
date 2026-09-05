@@ -1,17 +1,21 @@
-// Memory game mode logic placeholder
 // Mode 7: Memory Grid Game Logic
 
 // Game State
 let level = 1;
-let gridSize = 3; // Starts with 3x3 grid
-let activeTilesCount = 3; // Number of tiles to remember
-let activeTiles = []; // Store correct tile indexes
+let gridSize = 3; 
+let activeTilesCount = 3; 
+let activeTiles = []; 
 let playerClicks = 0;
 let isAcceptingInput = false;
+
+// Timer State
+let countdownTimer;
+let timeLeft = 20;
 
 // DOM Elements
 const scoreElement = document.getElementById('score');
 const statusText = document.getElementById('statusText');
+const timerElement = document.getElementById('timer'); // Element Timer
 const memoryGrid = document.getElementById('memoryGrid');
 const gameArea = document.getElementById('gameArea');
 const gameOverScreen = document.getElementById('gameOver');
@@ -21,12 +25,19 @@ const restartBtn = document.getElementById('restartBtn');
 // Initialize Game
 function initGame() {
     level = 1;
-    gridSize = 3; // Reset to 3x3
-    activeTilesCount = 3; // Reset tiles to memorize
+    gridSize = 3; 
+    activeTilesCount = 3; 
     
     scoreElement.textContent = level;
     gameOverScreen.classList.add('hidden');
-    gameArea.style.display = 'flex';
+    gameArea.style.display = 'block'; 
+    
+    // Reset Timer
+    clearInterval(countdownTimer);
+    if(timerElement) {
+        timerElement.textContent = "20";
+        timerElement.classList.remove('timer-warning');
+    }
     
     startLevel();
 }
@@ -36,27 +47,29 @@ function startLevel() {
     isAcceptingInput = false;
     playerClicks = 0;
     activeTiles = [];
-    memoryGrid.innerHTML = ''; // Clear previous grid
+    memoryGrid.innerHTML = ''; 
     
-    // Dynamically set grid columns and rows based on current gridSize
+    // Turn off timer while memorizing
+    clearInterval(countdownTimer);
+    if(timerElement) {
+        timerElement.textContent = "20";
+        timerElement.classList.remove('timer-warning');
+    }
+    
     memoryGrid.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
     memoryGrid.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`;
     
     const totalTiles = gridSize * gridSize;
     
-    // Create tile elements
     for (let i = 0; i < totalTiles; i++) {
         const tile = document.createElement('div');
         tile.classList.add('memory-tile', 'disabled');
         tile.dataset.index = i;
         
-        // Add click listener
         tile.addEventListener('click', () => handleTileClick(tile, i));
-        
         memoryGrid.appendChild(tile);
     }
     
-    // Randomly select tiles to memorize
     while (activeTiles.length < activeTilesCount) {
         const randomId = Math.floor(Math.random() * totalTiles);
         if (!activeTiles.includes(randomId)) {
@@ -65,9 +78,8 @@ function startLevel() {
     }
     
     statusText.textContent = "Memorize!";
-    statusText.style.color = "#ff9800";
+    statusText.style.color = "#ffea00"; // Yellow warning
     
-    // Small delay before showing the pattern
     setTimeout(() => {
         showPattern();
     }, 800);
@@ -81,7 +93,6 @@ function showPattern() {
         tiles[index].classList.add('highlight');
     });
     
-    // Hide pattern after a delay (Gets slightly faster at higher levels)
     const displayTime = Math.max(600, 1500 - (level * 50)); 
     
     setTimeout(() => {
@@ -89,73 +100,100 @@ function showPattern() {
     }, displayTime);
 }
 
-// Hide the pattern and let player guess
+// Hide the pattern and start the timer
 function hidePattern(tiles) {
     tiles.forEach(tile => {
         tile.classList.remove('highlight');
-        tile.classList.remove('disabled'); // Enable clicks
+        tile.classList.remove('disabled'); 
     });
     
     statusText.textContent = "Your Turn!";
-    statusText.style.color = "#4CAF50";
+    statusText.style.color = "#00e676"; // Green
     isAcceptingInput = true;
+
+    // Start 20 second timer
+    startTimer();
+}
+
+// Timer countdown logic
+function startTimer() {
+    clearInterval(countdownTimer);
+    timeLeft = 20;
+    
+    countdownTimer = setInterval(() => {
+        timeLeft--;
+        if(timerElement) timerElement.textContent = timeLeft;
+
+        // Give red warning if remaining time <= 5 seconds
+        if (timeLeft <= 5 && timerElement) {
+            timerElement.classList.add('timer-warning');
+        }
+
+        // If time runs out
+        if (timeLeft <= 0) {
+            clearInterval(countdownTimer);
+            gameOver(true); // true = game over due to timeout
+        }
+    }, 1000);
 }
 
 // Handle player clicks
 function handleTileClick(tile, index) {
     if (!isAcceptingInput) return;
-    if (tile.classList.contains('correct')) return; // Ignore if already clicked correctly
+    if (tile.classList.contains('correct')) return; 
     
     if (activeTiles.includes(index)) {
-        // Correct guess
         tile.classList.add('correct');
         playerClicks++;
         
         if (typeof playSound === 'function') playSound('correct');
         
-        // Check if level is complete
         if (playerClicks === activeTilesCount) {
             levelComplete();
         }
     } else {
-        // Wrong guess - Game Over
         tile.classList.add('wrong');
-        gameOver();
+        gameOver(false); // false = game over due to wrong click
     }
 }
 
 // Proceed to next level
 function levelComplete() {
     isAcceptingInput = false;
+    clearInterval(countdownTimer); // Stop timer when winning
+    
     statusText.textContent = "Good Job!";
-    statusText.style.color = "#2196F3";
+    statusText.style.color = "#38bdf8";
     
     level++;
     scoreElement.textContent = level;
     
-    // Logic to expand grid and increase difficulty
-    activeTilesCount++; // Always add 1 more tile to memorize
+    activeTilesCount++; 
     
-    // Increase grid size every 2 levels (up to a max of 7x7 so it doesn't get too small)
     if (level % 2 !== 0 && gridSize < 7) { 
         gridSize++;
     }
     
-    // Delay before next level starts
     setTimeout(() => {
         startLevel();
     }, 1200);
 }
 
 // End the game
-function gameOver() {
+function gameOver(isTimeOut = false) {
     isAcceptingInput = false;
-    statusText.textContent = "Game Over!";
-    statusText.style.color = "#f44336";
+    clearInterval(countdownTimer); // Stop timer
+    
+    // Change text based on loss reason
+    if (isTimeOut) {
+        statusText.textContent = "Time's Up!";
+    } else {
+        statusText.textContent = "Wrong Tile!";
+    }
+    statusText.style.color = "#ff003c"; // Red
     
     if (typeof playSound === 'function') playSound('gameover');
     
-    // Reveal the tiles the player missed
     const tiles = document.querySelectorAll('.memory-tile');
     activeTiles.forEach(index => {
         if (!tiles[index].classList.contains('correct')) {
@@ -163,7 +201,6 @@ function gameOver() {
         }
     });
     
-    // Show game over screen after a delay
     setTimeout(() => {
         gameArea.style.display = 'none';
         gameOverScreen.classList.remove('hidden');
