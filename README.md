@@ -67,7 +67,7 @@ Visit the live demo: **[QuickBrain Math Game](https://ekoas.github.io/QuickBrain
 ### Run Locally
 1. Clone the repository:
 ```bash
-git clone https://github.com/your-username/QuickBrain.git
+git clone https://github.com/EkoAs/QuickBrain.git
 ```
 
 2. Navigate to the project folder:
