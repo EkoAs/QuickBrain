@@ -1,7 +1,7 @@
 # 🎮 QuickBrain - Math Game
 
-[![Live Demo](https://img.shields.io/badge/demo-live-success?style=for-the-badge)](https://your-username.github.io/QuickBrain/)
-[![GitHub Pages](https://img.shields.io/badge/GitHub-Pages-blue?style=for-the-badge&logo=github)](https://your-username.github.io/QuickBrain/)
+[![Live Demo](https://img.shields.io/badge/demo-live-success?style=for-the-badge)](https://ekoas.github.io/QuickBrain/)
+[![GitHub Pages](https://img.shields.io/badge/GitHub-Pages-blue?style=for-the-badge&logo=github)](https://ekoas.github.io/QuickBrain/)
 [![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)](LICENSE)
 
 A fast-paced, interactive math training game featuring 7 unique game modes designed to sharpen your arithmetic skills. Built with pure HTML, CSS, and JavaScript.
