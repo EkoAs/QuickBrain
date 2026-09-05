@@ -62,7 +62,7 @@ Watch the pattern, remember the positions, and click tiles in the correct order.
 ## 🚀 Quick Start
 
 ### Play Online
-Visit the live demo: **[QuickBrain Math Game](https://your-username.github.io/QuickBrain/)**
+Visit the live demo: **[QuickBrain Math Game](https://ekoas.github.io/QuickBrain/)**
 
 ### Run Locally
 1. Clone the repository:
@@ -207,7 +207,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 Have questions or suggestions? Feel free to reach out!
 
-- **GitHub:** [@EkoAs](https://github.com/your-username)
+- **GitHub:** [@EkoAs](https://github.com/EkoAs)
 - **Project Link:** [https://github.com/EkoAs](https://github.com/EkoAs/QuickBrain)
 
 ---
